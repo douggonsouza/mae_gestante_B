@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cadastrogestante.dart';
+import 'cadastroprofissional.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const Cadastrogestante(title: 'Cadastro Profissional'),
+      home: const Cadastroprofissional(title: 'Cadastro Profissional'),
     );
   }
 }

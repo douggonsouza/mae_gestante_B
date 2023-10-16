@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'myhome.dart';
 
 // Get a reference your Supabase client
 final supabase = Supabase.instance.client;
 
-class Cadastrogestante extends StatefulWidget  {
-  const Cadastrogestante({super.key, required this.title});
+const String site = 'https://dztvpwxvtwduzpymjgxp.supabase.co/rest/v1/professionals';
+const String apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6dHZwd3h2dHdkdXpweW1qZ3hwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQyNTg1MzgsImV4cCI6MjAwOTgzNDUzOH0.3GCGNxJWtET2ScYWzS5_hl1CcHL2fCZB-LwQUmJjORQ';
+
+class Cadastroprofissional extends StatefulWidget  {
+  const Cadastroprofissional({super.key, required this.title});
 
   final String title;
 
   @override
-  State<Cadastrogestante> createState() => _CadastrogestanteState();
+  State<Cadastroprofissional> createState() => _CadastroprofissionalState();
 }
 
-class _CadastrogestanteState extends State<Cadastrogestante> {
+class _CadastroprofissionalState extends State<Cadastroprofissional> {
 
   String name = '';
   String email = '';
   String document = '';
   String password = '';
 
-  void cadastrar ()
+  void cadastrar () async
   {
-    final _future =  supabase
-    .from('professionals')
-    .insert({'name': name, 'email': email, 'document': document, 'password': password});
+    Map<String, String> dd = {
+      'name': name,
+      'email': email,
+      'document': document,
+      'password': password,
+    };
 
-    if(_future != null){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MyHome()),
-      );
-    }
-    
+    Map<String, String> header = {};
+    header["apikey"] =  apikey;
+
+    var client = http.Client();
+    final responde = await client.post(Uri.parse(site), headers: header, body: dd);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyHome()),
+    );
   }
 
   @override
